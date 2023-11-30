@@ -18,7 +18,8 @@ equipment.getAllEquipment = async (req, res, next) => {
         const response = await equipment.getAllEquipment();
         res.status(200).send(response)
     } catch(err) {
-        console.log(`---------In catch block of equipmentContoller file & getAllEquipment method-----------------------`);  
+        console.log(`---------In catch block of equipmentContoller file & getAllEquipment method-----------------------`);
+        throw new Error(err.message); 
     }
 };
 
@@ -55,6 +56,15 @@ equipment.getManufactureOfEquipment = async (req, res, next) => {
         const equipment = new Equipments();
     } catch(err) {
         console.log(`---------In catch block of equipmentContoller file & getManufactureOfEquipment method-----------------------`);
+    }
+};
+
+equipment.deleteEquipment = async (req, res, next) => {
+    console.log(`----------- In equipmentContoller file & deleteEquipment method-----------------------`);
+    try{
+        const equipment = new Equipments();
+    } catch(err) {
+        console.log(`---------In catch block of equipmentContoller file & deleteEquipment method-----------------------`);
     }
 };
 

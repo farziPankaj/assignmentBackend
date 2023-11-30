@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const validate = require('../middleware/validator');
+const equipmentController = require('../controller/equipmentController');
 
 router.get('/equipments', (_, res) => {
     console.log(`Equipments routes working fine.`);
@@ -41,7 +42,7 @@ router.put(
 router.delete(
     `/equipment/:id/deleteEquipment`,
     validate.validateId, 
-    equipmentController.updateEquipment
+    equipmentController.deleteEquipment
 );
 
 router.get(

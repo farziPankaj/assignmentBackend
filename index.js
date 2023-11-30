@@ -5,8 +5,9 @@ dotenv.config();
 const host = process.env.host;
 const portNumber = process.env.portNumber ? process.env.portNumber : 8800;
 const url = `${process.env.url}:${portNumber}`;
-const connectDB = require('./src/db/connectionDB');
+const OperationDB = require('./src/db/OperationDB');
 const routes = require('./src/route/index');
+const bodyParser = require('body-parser')
 
 // heartbeat api
 app.get('/', (_, res) => {
@@ -19,6 +20,8 @@ app.get('/', (_, res) => {
     });
 });
 
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 app.use(routes);
 
 // route not found
@@ -33,7 +36,7 @@ app.use((req, res) => {
 async function startServer() {
     console.log("-----------------In index file & startServer method-------------");
     try{
-        await connectDB();
+        await new OperationDB().connectDB();
         app.listen(portNumber, host, (err) => {
             if(!err) {
                 console.log(`Server is running and listening on port: ${portNumber} and host: ${host}`);

@@ -11,7 +11,7 @@ router.get('/manufacturer', (_, res) => {
         message: `Manufacture routes working fine`
     });
 });
-
+/*
 router.get(
     `/manufacturer/:id/getManufactureDetailsById`,
     validate.validateId,
@@ -49,5 +49,5 @@ router.get(
     validate.validateId,
     manufactureController.getEquipmentsOfManufactureById
 );
-
+*/
 module.exports = router;

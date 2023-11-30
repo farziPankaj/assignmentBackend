@@ -41,7 +41,7 @@ router.put(
 router.delete(
     `/manufacturer/:id/deleteManufacture`,
     validate.validateId,
-    manufactureController.updateManufacture
+    manufactureController.deleteManufacture
 );
 
 router.get(

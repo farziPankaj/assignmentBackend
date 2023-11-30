@@ -7,6 +7,7 @@ const portNumber = process.env.portNumber ? process.env.portNumber : 8800;
 const url = `${process.env.url}:${portNumber}`;
 const OperationDB = require('./src/db/OperationDB');
 const routes = require('./src/route/index');
+const bodyParser = require('body-parser')
 
 // heartbeat api
 app.get('/', (_, res) => {
@@ -19,6 +20,8 @@ app.get('/', (_, res) => {
     });
 });
 
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 app.use(routes);
 
 // route not found

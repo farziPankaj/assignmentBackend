@@ -5,7 +5,8 @@ dotenv.config();
 const host = process.env.host;
 const portNumber = process.env.portNumber ? process.env.portNumber : 8800;
 const url = `${process.env.url}:${portNumber}`;
-
+const connectDB = require('./src/db/connectionDB');
+const routes = require('./src/route/index');
 
 // heartbeat api
 app.get('/', (_, res) => {
@@ -18,19 +19,21 @@ app.get('/', (_, res) => {
     });
 });
 
-// route bot found
+app.use(routes);
+
+// route not found
 app.use((req, res) => {
     console.log(`${req.method + ' ' + req.url} route not found`);
     res.status(404).json({
         status: 404,
-        message: 'Not Found'
+        message: 'Route Not Found'
     });
 });
 
 async function startServer() {
     console.log("-----------------In index file & startServer method-------------");
     try{
-        // await connectDB(localDBUrl);
+        await connectDB();
         app.listen(portNumber, host, (err) => {
             if(!err) {
                 console.log(`Server is running and listening on port: ${portNumber} and host: ${host}`);

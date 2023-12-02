@@ -19,9 +19,6 @@ class Equipments {
         console.log(`--------------- In equipmentSerivce file & getEquipmentDetailsById method -----------------------------`);
         try {
             const response = await new OperationDB().getEquipmentDetailsById(id);
-            if(response.rowCount == 0) {
-                throw new Error(`No equipment exist with given Id: ${id}, please try again with other Id`);
-            }
             return { equipments: response.rows, count: response.rowCount };
         } catch(err) {
             console.log(`---------In catch block of equipmentService file & getEquipmentDetailsById method-----------------------`);
@@ -38,35 +35,70 @@ class Equipments {
                 return
             }
             throw new Error(`Error while saving equipment`);
-            // // return { equipments: response.rows, count: response.rowCount };
-            // return response;
         } catch(err) {
             console.log(`---------In catch block of equipmentService file & saveNewEquipment method-----------------------`);
             throw new Error(err.message); 
         }
     };
 
-    async updateEquipmentById() {
+    async updateEquipmentById(id, data) {
+        console.log(`--------------- In equipmentSerivce file & updateEquipmentById method -----------------------------`);
         try {
-
+            const response = await new OperationDB().updateEquipmentById(id, data);
+            if(response.rowCount == 1) {
+                return response
+            }
+            throw new Error(`Error while updating equipment`);
         } catch(err) {
-
+            console.log(`---------In catch block of equipmentService file & updateEquipmentById method-----------------------`);
+            throw new Error(err.message); 
         }
     };
 
-    async deleteEquipment() {
+    async deleteEquipment(id) {
+        console.log(`----------- In equipmentService file & deleteEquipment method-----------------------`);
         try {
-
+            const response = await new OperationDB().deleteEquipment(id);
+            if(response.rowCount == 1) {
+                return response.rowCount
+            }
+            throw new Error(`Error while deleting equipment`);
         } catch(err) {
-
+            console.log(`---------In catch block of equipmentContoller file & deleteEquipment method-----------------------`);
+            throw new Error(err.message); 
         }
     };
 
-    async getManufactureOfEquipment() {
+    async getManufactureOfEquipment(id) {
+        console.log(`----------- In equipmentService file & getManufactureOfEquipment method-----------------------`);
         try {
-
+            const response = await new OperationDB().getManufactureOfEquipment(id);
+            return { manufacturer: response.rows, count: response.rowCount};
         } catch(err) {
+            console.log(`---------In catch block of equipmentContoller file & getManufactureOfEquipment method-----------------------`);
+            throw new Error(err.message); 
+        }
+    };
 
+    modifyRequestedData(updatedData, originalData) {
+        console.log(`----------- In equipmentService file & modifyRequestedData method-----------------------`);
+        try {
+            if(!updatedData.manufacturerId && originalData.manufacturerid) {
+                updatedData.manufacturerId = originalData.manufacturerid;
+            }
+
+            if(!updatedData.model && originalData.model) {
+                updatedData.manufacturerId = originalData.model;
+            }
+
+            if(!updatedData.serialNumber && originalData.serialnumber) {
+                updatedData.serialNumber = originalData.serialnumber;
+            }
+
+            return updatedData;
+        } catch(err) {
+            console.log(`---------In catch block of equipmentContoller file & modifyRequestedData method-----------------------`);
+            throw new Error(err.message); 
         }
     };
 };

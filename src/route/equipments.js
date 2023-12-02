@@ -24,21 +24,22 @@ router.get(
     equipmentController.getAllEquipment
 );
 
+// Pending: fkey validation
+// Pending: Check for existsing data only for serial Number
 router.post(
     `/equipment/saveNewEquipment`,
     validate.validateEquipmentDetails,
     equipmentController.saveNewEquipment
 );
 
-// equipment exists or not
-router.put(
+// Pending: check for serialNumber & ManufacturerId (same as above validation)
+router.patch(
     `/equipment/updateEquipment/:id`,
     validate.validateId,
     validate.validateEquipmentDetails,
     equipmentController.updateEquipmentById
 );
 
-// equipment exists or not
 router.delete(
     `/equipment/:id/deleteEquipment`,
     validate.validateId, 

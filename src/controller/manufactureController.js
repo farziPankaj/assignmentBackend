@@ -80,7 +80,7 @@ manufacturer.getEquipmentsOfManufacturerById = async (req, res) => {
     try{
         const manufacturerId = req.params.id;
         const manufacturerObj = new Manufacturer();
-        const manufacturerExists = await manufacturerObj.getEquipmentsOfManufacturerById(manufacturerId);
+        const manufacturerExists = await manufacturerObj.getManufactureDetailsById(manufacturerId);
         if(manufacturerExists.count == 0) {
             throw new Error(`No manufacturer exist with given Id: ${manufacturerObj}, please try again with other Id`)
         } else {
@@ -101,16 +101,31 @@ manufacturer.getEquipmentsOfManufacturerById = async (req, res) => {
         });
     }
 };
-/*
-manufacturer.updateManufactureById = async (req, res, next) => {
-    console.log(`----------- In manufacturerContoller file & updateManufactureById method-----------------------`);
+
+manufacturer.updateManufacturerById = async (req, res, next) => {
+    console.log(`----------- In manufacturerContoller file & updateManufacturerById method-----------------------`);
     try{
-        const manufacturer = new Manufacturer();
+        const manufacturerId = req.params.id;
+        const manufacturerObj = new Manufacturer();
+        const manufacturerExists = await manufacturerObj.getManufactureDetailsById(manufacturerId);
+        if(manufacturerExists.count == 0) {
+            throw new Error(`No manufacturer exist with given Id: ${manufacturerObj}, please try again with other Id`)
+        } else {
+            // const response = await manufacturerObj.updateManufacturerById(manufacturerId);
+            // const updatedData = equipmentObj.modifyRequestedData(req.body, equipmentExists.equipments[0]);
+            // await equipmentObj.updateEquipmentById(equipmentId, updatedData);
+            // res.status(200).send({
+            //     message: `Equipment update successfully!!!`
+            // });  
+        }
     } catch(err) {
-        console.log(`---------In catch block of manufacturerContoller file & updateManufactureById method-----------------------`); 
+        console.log(`---------In catch block of manufacturerContoller file & updateManufacturerById method-----------------------`);
+        console.log(`${err}`);
+        res.status(200).send({
+            message: err.message
+        });
     }
 };
-*/
 
 module.exports = manufacturer;
 

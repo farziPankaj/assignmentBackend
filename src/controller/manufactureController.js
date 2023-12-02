@@ -80,7 +80,7 @@ manufacturer.getEquipmentsOfManufacturerById = async (req, res) => {
     try{
         const manufacturerId = req.params.id;
         const manufacturerObj = new Manufacturer();
-        const manufacturerExists = await manufacturerObj.getEquipmentsOfManufacturerById(manufacturerId);
+        const manufacturerExists = await manufacturerObj.getManufactureDetailsById(manufacturerId);
         if(manufacturerExists.count == 0) {
             throw new Error(`No manufacturer exist with given Id: ${manufacturerObj}, please try again with other Id`)
         } else {

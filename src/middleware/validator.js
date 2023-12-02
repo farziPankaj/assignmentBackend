@@ -161,14 +161,6 @@ const validateManufacturerDetails = async(req, res, next) => {
     handleValidationErrors(req, res, next);
 };
 
-// const checkManufacturerExistsOrNot = async(req, res, next) => {
-//     await checkSchema({
-        
-//     }).run(req);
-
-//     handleValidationErrors(req, res, next);
-// };
-
 const validateEquipmentDetails = async(req, res, next) => {
     await checkSchema({
         model: {
@@ -217,13 +209,5 @@ const validateEquipmentDetails = async(req, res, next) => {
 
     handleValidationErrors(req, res, next);
 };
-
-// const checkEquipmentExistsOrNot = async(req, res, next) => {
-//     await checkSchema({
-        
-//     }).run(req);
-
-//     handleValidationErrors(req, res, next);
-// };
 
 module.exports = { validateId, validateManufacturerDetails, validateEquipmentDetails };

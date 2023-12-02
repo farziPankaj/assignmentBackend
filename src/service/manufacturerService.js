@@ -64,23 +64,18 @@ class Manufacturer {
             throw new Error(err.message); 
         }
     };
-/*
-    async updateEquipmentById() {
+
+    async updateManufacturerById() {
+        console.log(`----------- In equipmentService file & updateManufacturerById method-----------------------`);
         try {
-
+            const response = await new OperationDB().updateManufacturerById(id);
+            return { manufacturer: response.rows, count: response.rowCount};
         } catch(err) {
-
+            console.log(`---------In catch block of equipmentContoller file & updateManufacturerById method-----------------------`);
+            throw new Error(err.message); 
         }
     };
 
-    async getManufactureOfEquipment() {
-        try {
-
-        } catch(err) {
-
-        }
-    };
-    */
 };
 
 module.exports = Manufacturer;

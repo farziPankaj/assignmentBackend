@@ -156,6 +156,30 @@ class OperationDB {
             throw new Error(err);
         }
     };
+
+    async getEquipmentsOfManufacturerById(id) {
+        console.log("----------------------------In OperationDB file & getEquipmentsOfManufacturerById method ------------------------------------");
+        try {
+            const result = await pool.query(`SELECT * FROM equipments WHERE manufacturerid='${id}';`);
+            return result;
+        } catch(err) {
+            console.log("---------------- In catch block OperationDB file & getEquipmentsOfManufacturerById method------------------------------------");
+            console.log(`${err}`);
+            throw new Error(err);
+        }
+    };
+
+    async updateManufacturerById(id) {
+        console.log("----------------------------In OperationDB file & updateManufacturerById method ------------------------------------");
+        try {
+            const result = await pool.query(`SELECT * FROM equipments WHERE manufacturerid='${id}';`);
+            return result;
+        } catch(err) {
+            console.log("---------------- In catch block OperationDB file & updateManufacturerById method------------------------------------");
+            console.log(`${err}`);
+            throw new Error(err);
+        }
+    };
 }
 
 module.exports = OperationDB;

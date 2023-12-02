@@ -26,8 +26,8 @@ class OperationDB {
     };
 
     async getAllEquipment(){
+        console.log("----------------------------In OperationDB file & getAllEquipment method ------------------------------------");
         try {
-            console.log("----------------------------In OperationDB file & getAllEquipment method ------------------------------------");
             const result = await pool.query(`SELECT * FROM equipments;`);
             return result;
         } catch(err) {
@@ -38,8 +38,8 @@ class OperationDB {
     };
 
     async getEquipmentDetailsById(id) {
+        console.log("----------------------------In OperationDB file & getEquipmentDetailsById method ------------------------------------");
         try {
-            console.log("----------------------------In OperationDB file & getEquipmentDetailsById method ------------------------------------");
             const result = await pool.query(`SELECT * FROM equipments WHERE id='${id}';`);
             return result;
         } catch(err) {
@@ -50,8 +50,8 @@ class OperationDB {
     };
 
     async saveNewEquipment(equipmentDetails) {
+        console.log("----------------------------In OperationDB file & saveNewEquipment method ------------------------------------");
         try {
-            console.log("----------------------------In OperationDB file & saveNewEquipment method ------------------------------------");
             const result = await pool.query(`INSERT INTO equipments (id, model, serialnumber, manufacturerid) VALUES ('${equipmentDetails.id}','${equipmentDetails.model}','${equipmentDetails.serialNumber}','${equipmentDetails.manufacturerId}');`);
             return result;
         } catch(err) {
@@ -62,8 +62,8 @@ class OperationDB {
     };
 
     async deleteEquipment(id) {
+        console.log("----------------------------In OperationDB file & deleteEquipment method ------------------------------------");
         try {
-            console.log("----------------------------In OperationDB file & deleteEquipment method ------------------------------------");
             const result = await pool.query(`DELETE FROM equipments WHERE id='${id}';`);
             return result;
         } catch(err) {
@@ -74,8 +74,8 @@ class OperationDB {
     };
 
     async getManufactureOfEquipment(id) {
+        console.log("----------------------------In OperationDB file & getManufactureOfEquipment method ------------------------------------");
         try {
-            console.log("----------------------------In OperationDB file & getManufactureOfEquipment method ------------------------------------");
             const result = await pool.query(`SELECT id, name FROM manufacturer WHERE id=(SELECT manufacturerid FROM equipments WHERE id='${id}');`);
             return result;
         } catch(err) {
@@ -86,8 +86,8 @@ class OperationDB {
     }
 
     async updateEquipmentById(id, data) {
+        console.log("----------------------------In OperationDB file & updateEquipmentById method ------------------------------------");
         try {
-            console.log("----------------------------In OperationDB file & updateEquipmentById method ------------------------------------");
             const result = await pool.query(`UPDATE equipments SET model='${data.model}', serialnumber='${data.serialNumber}', manufacturerid='${data.manufacturerId}' WHERE id='${id}';`);
             return result;
         } catch(err) {
@@ -95,7 +95,67 @@ class OperationDB {
             console.log(`${err}`);
             throw new Error(err);
         } 
-    }
+    };
+
+    async getAllManufacturers() {
+        console.log("----------------------------In OperationDB file & getAllManufacturers method ------------------------------------");
+        try {
+            const result = await pool.query(`SELECT * FROM manufacturer;`);
+            return result;
+        } catch(err) {
+            console.log("---------------- In catch block OperationDB file & getAllManufacturers method------------------------------------");
+            console.log(`${err}`);
+            throw new Error(err);
+        }
+    };
+
+    async getManufactureDetailsById(id) {
+        console.log("----------------------------In OperationDB file & getManufactureDetailsById method ------------------------------------");
+        try {
+            const result = await pool.query(`SELECT * FROM manufacturer WHERE id='${id}';`);
+            return result;
+        } catch(err) {
+            console.log("---------------- In catch block OperationDB file & getManufactureDetailsById method------------------------------------");
+            console.log(`${err}`);
+            throw new Error(err);
+        }
+    };
+
+    async saveNewManufacturer(manufacturerDetails) {
+        console.log("----------------------------In OperationDB file & saveNewManufacturer method ------------------------------------");
+        try {
+            const result = await pool.query(`INSERT INTO manufacturer (id, name) VALUES ('${manufacturerDetails.id}','${manufacturerDetails.name}');`);
+            return result;
+        } catch(err) {
+            console.log("---------------- In catch block OperationDB file & saveNewManufacturer method------------------------------------");
+            console.log(`${err}`);
+            throw new Error(err);
+        }
+    };
+
+    async deleteManufacturer(id) {
+        console.log("----------------------------In OperationDB file & deleteManufacturer method ------------------------------------");
+        try {
+            const result = await pool.query(`DELETE FROM manufacturer WHERE id='${id}';`);
+            return result;
+        } catch(err) {
+            console.log("---------------- In catch block OperationDB file & deleteManufacturer method------------------------------------");
+            console.log(`${err}`);
+            throw new Error(err);
+        }
+    };
+
+    async getEquipmentsOfManufacturerById(id) {
+        console.log("----------------------------In OperationDB file & getEquipmentsOfManufacturerById method ------------------------------------");
+        try {
+            const result = await pool.query(`SELECT * FROM equipments WHERE manufacturerid='${id}';`);
+            return result;
+        } catch(err) {
+            console.log("---------------- In catch block OperationDB file & getEquipmentsOfManufacturerById method------------------------------------");
+            console.log(`${err}`);
+            throw new Error(err);
+        }
+    };
 }
 
 module.exports = OperationDB;

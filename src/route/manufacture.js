@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const validate = require('../middleware/validator');
+const manufactureController = require('../controller/manufactureController');
 
 router.get('/manufacturer', (_, res) => {
     console.log(`Manufacture routes working fine.`);
@@ -11,43 +12,43 @@ router.get('/manufacturer', (_, res) => {
         message: `Manufacture routes working fine`
     });
 });
-/*
+
 router.get(
-    `/manufacturer/:id/getManufactureDetailsById`,
+    `/manufacturer/listAllManufacturers`,
+    manufactureController.getAllManufacturers
+);
+
+router.get(
+    `/manufacturer/:id/getManufacturerDetailsById`,
     validate.validateId,
     manufactureController.getManufactureDetailsById
 );
 
-router.get(
-    `/manufacturer/listAllManufactures`,
-    manufactureController.getAllManufactures
-);
-
+// duplicate saving - db modification name unique
 router.post(
-    `/manufacturer/saveNewManufacture`,
+    `/manufacturer/saveNewManufacturer`,
     validate.validateManufacturerDetails,
-    manufactureController.saveNewManufacture
+    manufactureController.saveNewManufacturer
 );
 
+router.delete(
+    `/manufacturer/:id/deleteManufacturer`,
+    validate.validateId,
+    manufactureController.deleteManufacturer
+);
+
+router.get(
+    `/manufacturer/equipment/getEquipmentsOfManufacture/:id`,
+    validate.validateId,
+    manufactureController.getEquipmentsOfManufacturerById
+);
+/*
 // manufacturer exists or not
 router.put(
     `/manufacturer/updateManufacture/:id`,
     validate.validateId,
     validate.validateManufacturerDetails,
     manufactureController.updateManufactureById
-);
-
-// manufacturer exists or not
-router.delete(
-    `/manufacturer/:id/deleteManufacture`,
-    validate.validateId,
-    manufactureController.deleteManufacture
-);
-
-router.get(
-    `/manufacturer/equipment/getEquipmentsOfManufacture/:id`,
-    validate.validateId,
-    manufactureController.getEquipmentsOfManufactureById
 );
 */
 module.exports = router;

@@ -2,33 +2,106 @@ const Manufacturer = require('../service/manufacturerService');
 
 class manufacturer {};
 
-manufacturer.getManufactureDetailsById = async (req, res, next) => {
+manufacturer.getAllManufacturers = async (_, res) => {
+    console.log(`----------- In manufacturerContoller file & getAllManufacturers method-----------------------`);
+    try{
+        const response = await new Manufacturer().getAllManufacturers();
+        res.status(200).send(response);
+    } catch(err) {
+        console.log(`---------In catch block of manufacturerContoller file & getAllManufacturers method-----------------------`);
+        console.log(`${err}`);
+        res.status(200).send({
+            message: err.message
+        }); 
+    }
+};
+
+manufacturer.getManufactureDetailsById = async (req, res) => {
     console.log(`----------- In manufacturerContoller file & getManufactureDetailsById method-----------------------`);
     try{
-        const manufacturer = new Manufacturer();
+        const manufacturerId = req.params.id
+        const response = await new Manufacturer().getManufactureDetailsById(manufacturerId);
+        if(response.count == 0) {
+            throw new Error(`No manufacturer exist with given Id: ${manufacturerId}, please try again with other Id`)
+        } else {
+            res.status(200).send(response)
+        }
     } catch(err) {
         console.log(`---------In catch block of manufacturerContoller file & getManufactureDetailsById method-----------------------`);
+        console.log(`${err}`);
+        res.status(200).send({
+            message: err.message
+        }); 
     }
 };
 
-manufacturer.getAllManufactures = async (req, res, next) => {
-    console.log(`----------- In manufacturerContoller file & getAllManufactures method-----------------------`);
+manufacturer.saveNewManufacturer = async (req, res) => {
+    console.log(`----------- In manufacturerContoller file & saveNewManufacturer method-----------------------`);
     try{
-        const manufacturer = new Manufacturer();
+        await new Manufacturer().saveNewManufacturer(req.body);
+        res.status(201).send({
+            message: 'Manufacturer saved successfully!!!'
+        })
     } catch(err) {
-        console.log(`---------In catch block of manufacturerContoller file & getAllManufactures method-----------------------`);  
+        console.log(`---------In catch block of manufacturerContoller file & saveNewManufacturer method-----------------------`);
+        console.log(`${err}`);
+        res.status(200).send({
+            message: err.message
+        });   
     }
 };
 
-manufacturer.saveNewManufacture = async (req, res, next) => {
-    console.log(`----------- In manufacturerContoller file & saveNewManufacture method-----------------------`);
+manufacturer.deleteManufacturer = async (req, res) => {
+    console.log(`----------- In manufacturerContoller file & deleteManufacturer method-----------------------`);
     try{
-        const manufacturer = new Manufacturer();
+        const manufacturerId = req.params.id;
+        const manufacturerObj = new Manufacturer();
+        const manufacturerExists = await manufacturerObj.getManufactureDetailsById(manufacturerId);
+        if(manufacturerExists.count == 0) {
+            throw new Error(`No manufacturer exist with given Id: ${manufacturerId}, please try again with other Id`)
+        } else {
+            await manufacturerObj.deleteManufacturer(manufacturerId);
+            res.status(200).send({
+                equipment: manufacturerExists,
+                message: `Manufacturer deleted successfully!!!`
+            });   
+        }
     } catch(err) {
-        console.log(`---------In catch block of manufacturerContoller file & saveNewManufacture method-----------------------`);  
+        console.log(`---------In catch block of manufacturerContoller file & deleteManufacturer method-----------------------`);
+        console.log(`${err}`);
+        res.status(200).send({
+            message: err.message
+        });
     }
 };
 
+manufacturer.getEquipmentsOfManufacturerById = async (req, res) => {
+    console.log(`----------- In manufacturerContoller file & getEquipmentsOfManufacturerById method-----------------------`);
+    try{
+        const manufacturerId = req.params.id;
+        const manufacturerObj = new Manufacturer();
+        const manufacturerExists = await manufacturerObj.getEquipmentsOfManufacturerById(manufacturerId);
+        if(manufacturerExists.count == 0) {
+            throw new Error(`No manufacturer exist with given Id: ${manufacturerObj}, please try again with other Id`)
+        } else {
+            const response = await manufacturerObj.getEquipmentsOfManufacturerById(manufacturerId);
+            if (response.count == 1) {
+                res.status(200).send(response);
+            } else {
+                res.status(200).send({
+                    message: `Manufacurer has no equipment, please wait for sometime while we update our database`
+                });
+            }
+        }
+    } catch(err) {
+        console.log(`---------In catch block of manufacturerContoller file & getEquipmentsOfManufacturerById method-----------------------`);
+        console.log(`${err}`);
+        res.status(200).send({
+            message: err.message
+        });
+    }
+};
+/*
 manufacturer.updateManufactureById = async (req, res, next) => {
     console.log(`----------- In manufacturerContoller file & updateManufactureById method-----------------------`);
     try{
@@ -37,24 +110,7 @@ manufacturer.updateManufactureById = async (req, res, next) => {
         console.log(`---------In catch block of manufacturerContoller file & updateManufactureById method-----------------------`); 
     }
 };
-
-manufacturer.deleteManufacture = async (req, res, next) => {
-    console.log(`----------- In manufacturerContoller file & deleteManufacture method-----------------------`);
-    try{
-        const manufacturer = new Manufacturer();
-    } catch(err) {
-        console.log(`---------In catch block of manufacturerContoller file & deleteManufacture method-----------------------`);
-    }
-};
-
-manufacturer.getEquipmentsOfManufactureById = async (req, res, next) => {
-    console.log(`----------- In manufacturerContoller file & getEquipmentsOfManufactureById method-----------------------`);
-    try{
-        const manufacturer = new Manufacturer();
-    } catch(err) {
-        console.log(`---------In catch block of manufacturerContoller file & getEquipmentsOfManufactureById method-----------------------`);
-    }
-};
+*/
 
 module.exports = manufacturer;
 

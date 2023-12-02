@@ -2,6 +2,20 @@ const Equipments = require('../service/equipmentService');
 
 class equipment {};
 
+equipment.getAllEquipment = async (req, res) => {
+    console.log(`----------- In equipmentContoller file & getAllEquipment method-----------------------`);
+    try{
+        const response = await new Equipments().getAllEquipment();
+        res.status(200).send(response)
+    } catch(err) {
+        console.log(`---------In catch block of equipmentContoller file & getAllEquipment method-----------------------`);
+        console.log(`${err}`);
+        res.status(500).send({
+            message: err.message
+        });
+    }
+};
+
 equipment.getEquipmentDetailsById = async (req, res) => {
     console.log(`----------- In equipmentContoller file & getEquipmentDetailsById method-----------------------`);
     try{
@@ -16,20 +30,6 @@ equipment.getEquipmentDetailsById = async (req, res) => {
         console.log(`---------In catch block of equipmentContoller file & getEquipmentDetailsById method-----------------------`);
         console.log(`${err}`);
         res.status(404).send({
-            message: err.message
-        });
-    }
-};
-
-equipment.getAllEquipment = async (req, res) => {
-    console.log(`----------- In equipmentContoller file & getAllEquipment method-----------------------`);
-    try{
-        const response = await new Equipments().getAllEquipment();
-        res.status(200).send(response)
-    } catch(err) {
-        console.log(`---------In catch block of equipmentContoller file & getAllEquipment method-----------------------`);
-        console.log(`${err}`);
-        res.status(500).send({
             message: err.message
         });
     }
@@ -108,7 +108,7 @@ equipment.getManufactureOfEquipment = async (req, res) => {
         if(equipmentExists.count == 0) {
             throw new Error(`No equipment exist with given Id: ${equipmentId}, please try again with other Id`)
         } else {
-            const response = await new Equipments().getManufactureOfEquipment(equipmentId);
+            const response = await equipmentObj.getManufactureOfEquipment(equipmentId);
             if (response.count == 1) {
                 res.status(200).send(response);
             } else {

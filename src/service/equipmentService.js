@@ -1,7 +1,6 @@
 const OperationDB = require("../db/OperationDB");
 const { v4: uuidv4 } = require('uuid');
 
-
 class Equipments {
 
     async getAllEquipment() {

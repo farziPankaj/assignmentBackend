@@ -1,10 +1,10 @@
 const express = require('express');
-const app = express();
+const router = express.Router();
 const equipments =  require('../route/equipments');
 const manufacturer =  require('../route/manufacture');
 
-app.use(equipments);
-app.use(manufacturer);
+router.use(equipments);
+router.use(manufacturer);
 
-module.exports = app;
+module.exports = router;
 
